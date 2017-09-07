@@ -65,9 +65,17 @@ def persist_users(lines):
             validators[o['stream']].validate(o['record'])
 
             logger.info('Stream {}'.format(o['stream']))
-            if o['stream'] == 'users':
+            if o['stream'] == config.get('users_stream'):
                 flattened_record = flatten(o['record'])
+
                 reserved_fields = ['id','user_id','name','email','phone']
+                reserved_field_overrides = config.get('reserved_field_overrides')
+                if reserved_field_overrides:
+                    # replace overides with keys expected by Intercom
+                    for k,v in reserved_field_overrides.items():
+                        flattened_record[k] = flattened_record[v]
+                        del flattened_record[v]
+
                 custom_attribute_keys = set(flattened_record.keys()) - set(reserved_fields)
                 custom_attributes = { ca_key: flattened_record[ca_key] for ca_key in custom_attribute_keys }
                 for ca_key in custom_attribute_keys: del flattened_record[ca_key]
@@ -123,6 +131,7 @@ def main():
     parser.add_argument('-c', '--config', help='Config file')
     args = parser.parse_args()
 
+    global config
     if args.config:
         with open(args.config) as input:
             config = json.load(input)
@@ -136,7 +145,6 @@ def main():
         threading.Thread(target=send_usage_stats).start()
 
     global intercom
-    logger.info(config.get('access_token'))
     intercom = Client(personal_access_token=config.get('access_token'))
     input = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
     state = persist_users(input)
