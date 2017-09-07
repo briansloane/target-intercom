@@ -25,8 +25,8 @@ The target updates the [core user model]. Any additional fields will be created 
 
 The target configuration takes the following properties:
 
-**access_token** - Required. This is an Intercom access token that can be generated at https://developers.intercom.com
-**users_stream** - Required. The name of the Singer stream that should be used for creating/updating users in Intercom
+**access_token** - Required. This is an Intercom access token that can be generated at https://developers.intercom.com  
+**users_stream** - Required. The name of the Singer stream that should be used for creating/updating users in Intercom  
 **reserved_field_overrides** - Optional. Field names from the source records which correspond to the fields in the core Intercom user model.
 
 Example Configuration
