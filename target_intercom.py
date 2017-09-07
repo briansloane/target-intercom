@@ -75,8 +75,8 @@ def persist_users(lines):
                 flattened_record['custom_attributes'] = custom_attributes
 
                 logger.info('Core Attributes: {}'.format(flattened_record))
-                # job_id = intercom.users.submit_bulk_job(create_items=[flattened_record]);
-                # logger.info('bulk job id: {}'.format(job_id.__dict__))
+                job_id = intercom.users.submit_bulk_job(create_items=[flattened_record]);
+                logger.info('bulk job id: {}'.format(job_id.__dict__))
             else:
                 logger.info('Unsupported Stream: {}'.format(o['stream']))
             state = None
