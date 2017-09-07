@@ -13,7 +13,7 @@ The target uses the bulk user API via [python-intercom](python-intercom)
 and therefore creates/updates users according to the Intercom API documentation:
 
 > Users not found via email or user_id will be created, and those that are found will be updated.
-> Note that the following lookup order applies when updating users - id then user_id then email, and results in the following logic -
+> Note that the following lookup order applies when updating users - id then user_id then email, and results in the following logic 
 > - id is matched - the user_id and email will be updated if they are sent.
 > - user_id match - the email will be updated, the id is not updated.
 > - email match where no user_id set on the matching user - the user_id will be set to the value sent in the request, the id is not updated.
